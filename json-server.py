@@ -5,7 +5,13 @@ from nss_handler import HandleRequests, status
 
 # Add your imports below this line
 from views import list_docks, retrieve_dock, delete_dock, update_dock
-from views import list_haulers, retrieve_hauler, delete_hauler, update_hauler
+from views import (
+    list_haulers,
+    retrieve_hauler,
+    delete_hauler,
+    update_hauler,
+    add_hauler,
+)
 from views import list_ships, retrieve_ship, delete_ship, update_ship, add_ship
 
 
@@ -154,7 +160,18 @@ class JSONServer(HandleRequests):
             if successfully_added:
                 return self.response("", status.HTTP_201_SUCCESS_CREATED.value)
 
-        pass
+        elif url["requested_resource"] == "haulers":
+            successfully_added = add_hauler(request_body)
+            if successfully_added:
+                return self.response("", status.HTTP_201_SUCCESS_CREATED.value)
+
+        elif url["requested_resource"] == "docks":
+            pass
+
+        return self.response(
+            "Requested resource not found",
+            status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value,
+        )
 
 
 #
