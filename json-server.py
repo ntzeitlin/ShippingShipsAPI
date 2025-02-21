@@ -4,7 +4,7 @@ from nss_handler import HandleRequests, status
 
 
 # Add your imports below this line
-from views import list_docks, retrieve_dock, delete_dock, update_dock
+from views import list_docks, retrieve_dock, delete_dock, update_dock, add_dock
 from views import (
     list_haulers,
     retrieve_hauler,
@@ -166,7 +166,9 @@ class JSONServer(HandleRequests):
                 return self.response("", status.HTTP_201_SUCCESS_CREATED.value)
 
         elif url["requested_resource"] == "docks":
-            pass
+            successfully_added = add_dock(request_body)
+            if successfully_added:
+                return self.response("", status.HTTP_201_SUCCESS_CREATED.value)
 
         return self.response(
             "Requested resource not found",

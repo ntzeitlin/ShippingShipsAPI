@@ -1,4 +1,4 @@
-from .dock_view import list_docks, retrieve_dock, delete_dock, update_dock
+from .dock_view import list_docks, retrieve_dock, delete_dock, update_dock, add_dock
 from .hauler_view import (
     list_haulers,
     retrieve_hauler,
