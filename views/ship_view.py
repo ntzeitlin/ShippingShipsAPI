@@ -164,7 +164,8 @@ def retrieve_ship(pk, url):
                 }
 
                 dictionary_version_of_object = ship
-
+            else:
+                dictionary_version_of_object = {}
         else:
             # Write the SQL query to get the information you want
             db_cursor.execute(
