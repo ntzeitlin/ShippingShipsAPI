@@ -45,7 +45,7 @@ class JSONServer(HandleRequests):
                 response_body = retrieve_ship(url["pk"])
                 return self.response(response_body, status.HTTP_200_SUCCESS.value)
 
-            response_body = list_ships()
+            response_body = list_ships(url)
             return self.response(response_body, status.HTTP_200_SUCCESS.value)
 
         else:
@@ -160,20 +160,36 @@ class JSONServer(HandleRequests):
             if successfully_added:
                 return self.response("", status.HTTP_201_SUCCESS_CREATED.value)
 
+            return self.response(
+                "Requested resource not found",
+                status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value,
+            )
+
         elif url["requested_resource"] == "haulers":
             successfully_added = add_hauler(request_body)
             if successfully_added:
                 return self.response("", status.HTTP_201_SUCCESS_CREATED.value)
+
+            return self.response(
+                "Requested resource not found",
+                status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value,
+            )
 
         elif url["requested_resource"] == "docks":
             successfully_added = add_dock(request_body)
             if successfully_added:
                 return self.response("", status.HTTP_201_SUCCESS_CREATED.value)
 
-        return self.response(
-            "Requested resource not found",
-            status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value,
-        )
+            return self.response(
+                "Requested resource not found",
+                status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value,
+            )
+
+        else:
+            return self.response(
+                "Requested resource not found",
+                status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value,
+            )
 
 
 #
